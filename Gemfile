@@ -28,6 +28,8 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'responders'
+
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'pry', :require => 'pry'
