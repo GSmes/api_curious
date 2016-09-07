@@ -1,8 +1,8 @@
-class Api::V1::Customers::RandomController < ApiBaseController
+class Api::V1::Customers::RandomController < ApplicationController
   respond_to :json
 
   def show
-    @customer = Customer.order("RANDOM()").first
+    @customer = Customer.random
     respond_with @customer
   end
 end
