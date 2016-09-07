@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V1::Invoices::RandomController do
   describe "GET random" do
     it "retrieves a random @invoice" do
-      500.times do |n|
+      500.times do
         FactoryGirl.create(:invoice)
       end
       get :show, params: { format: :json }
