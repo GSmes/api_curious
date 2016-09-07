@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe InvoiceItem, type: :model do
   it "has a valid factory" do
     invoice_item = FactoryGirl.create(:invoice_item)
-    
+
     expect(invoice_item).to be_valid
   end
-  
+
   it { should belong_to :invoice }
   it { should validate_presence_of :invoice_id }
   it { should belong_to :item }
