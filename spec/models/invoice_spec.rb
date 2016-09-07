@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Invoice do
+RSpec.describe Invoice, type: :model do
   it "has a valid factory" do
     invoice = FactoryGirl.create(:invoice)
     
