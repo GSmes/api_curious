@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V1::Invoices::SearchController do
   describe "GET find_all?params" do
     it "retrieves all possible search results correctly" do
-      100.times do
+      10.times do
         FactoryGirl.create(:invoice)
       end
         
@@ -11,11 +11,11 @@ RSpec.describe Api::V1::Invoices::SearchController do
         format: :json,
         invoice: { status: "Rockin' and Rollin'" }
       }
-      expect(assigns(:invoices).count).to eq(100)
+      expect(assigns(:invoices).count).to eq(10)
     end
     
     it "retrieves a subset of search results correctly" do
-      50.times do
+      5.times do
         FactoryGirl.create(:invoice)
         FactoryGirl.create(:invoice, status: "Subset")
       end
@@ -24,13 +24,13 @@ RSpec.describe Api::V1::Invoices::SearchController do
         format: :json,
         invoice: { status: "Subset" }
       }
-      expect(assigns(:invoices).count).to eq(50)
+      expect(assigns(:invoices).count).to eq(5)
     end
   end
   
   describe "GET find?params" do
     it "finds first search result correctly" do
-      50.times do |n|
+      5.times do
         FactoryGirl.create(:invoice)
       end
       
