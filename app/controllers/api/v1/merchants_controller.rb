@@ -2,10 +2,12 @@ class Api::V1::MerchantsController < ApplicationController
   respond_to :json
 
   def index
-    respond_with Merchant.all
+    @merchants = Merchant.all
+    respond_with @merchant
   end
 
   def show
-    respond_with Merchant.find(params[:id])
+    @merchant = Merchant.find(params[:id])
+    respond_with @merchant
   end
 end

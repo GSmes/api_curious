@@ -21,19 +21,4 @@ RSpec.describe Api::V1::InvoicesController do
       expect(assigns(:invoice).status).to_not eq("boring")
     end
   end
-  
-  describe "GET random" do
-    it "retrieves a random @invoice" do
-      200.times do |n|
-        FactoryGirl.create(:invoice, id: n)
-      end
-      get :random, params: { format: :json }
-      first_random_invoice = assigns(:invoice)
-      
-      get :random, params: { format: :json }
-      second_random_invoice = assigns(:invoice)
-      
-      expect(first_random_invoice).to_not eq(second_random_invoice)
-    end
-  end
 end
