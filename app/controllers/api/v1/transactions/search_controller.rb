@@ -2,22 +2,26 @@ class Api::V1::Transactions::SearchController < ApplicationController
   respond_to :json
 
   def index
-    respond_with Transaction.where(transaction_params)
+    @transactions = Transaction.where(transaction_params)
+    respond_with @transactions
   end
 
   def show
-    respond_with Transaction.find_by(transaction_params)
+    @transaction = Transaction.find_by(transaction_params)
+    respond_with @transaction
   end
 
   private
 
   def transaction_params
-    params.permit(:id,
-                  :invoice_id,
-                  :credit_card_number,
-                  :credit_card_expiration_date,
-                  :result,
-                  :created_at,
-                  :updated_at)
+    params.permit(
+      :id,
+      :invoice_id,
+      :credit_card_number,
+      :credit_card_expiration_date,
+      :result,
+      :created_at,
+      :updated_at
+    )
   end
 end
