@@ -1,8 +1,8 @@
 FactoryGirl.define do
-  factory :customer do |f|
-    f.first_name { Faker::Name.first_name }
-    f.last_name { Faker::Name.last_name }
-    f.created_at { Faker::Time.between(10.years.ago, 1.year.ago) }
-    f.updated_at { Faker::Time.between(1.year.ago, DateTime.now) }
+  factory :customer do
+    sequence(:first_name) { |n| "Name_#{n}" }
+    sequence(:last_name) { |n| "Smith_#{n}" }
+    created_at { 1.year.ago }
+    updated_at { DateTime.now }
   end
 end
