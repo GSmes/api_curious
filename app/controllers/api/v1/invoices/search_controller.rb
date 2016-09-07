@@ -7,7 +7,7 @@ class Api::V1::Invoices::SearchController < ApplicationController
   end
   
   def show
-    @invoice = Invoice.find(invoice_params)
+    @invoice = Invoice.find_by(invoice_params)
     respond_with @invoice
   end
   
@@ -22,4 +22,5 @@ class Api::V1::Invoices::SearchController < ApplicationController
       :created_at,
       :updated_at
     )
+  end
 end
