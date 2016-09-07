@@ -1,7 +1,8 @@
-class Api::V1::Transactions::RandomController < ApiBaseController
+class Api::V1::Transactions::RandomController < ApplicationController
   respond_to :json
 
   def show
-    respond_with Transaction.order("RANDOM()").first
+    @transaction = Transaction.order("RANDOM()").first
+    respond_with @transaction
   end
 end

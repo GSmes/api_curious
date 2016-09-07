@@ -9,9 +9,6 @@ RSpec.describe Api::V1::InvoicesController do
       get :index, format: :json
       expect(assigns(:invoices).count).to eq(10)
     end
-    
-    xit "returns all invoices in JSON format" do
-    end
   end
   
   describe "GET show" do
@@ -21,21 +18,7 @@ RSpec.describe Api::V1::InvoicesController do
       
       get :show, params: { id: 1, format: :json }
       expect(assigns(:invoice).status).to eq("bling")
-    end
-  end
-  
-  describe "GET random" do
-    it "retrieves a random @invoice" do
-      200.times do |n|
-        FactoryGirl.create(:invoice, id: n)
-      end
-      get :random, params: { format: :json }
-      first_random_invoice = assigns(:invoice)
-      
-      get :random, params: { format: :json }
-      second_random_invoice = assigns(:invoice)
-      
-      expect(first_random_invoice).to_not eq(second_random_invoice)
+      expect(assigns(:invoice).status).to_not eq("boring")
     end
   end
 end

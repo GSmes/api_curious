@@ -1,12 +1,14 @@
-class Api::V1::Merchants::SearchController < ApiBaseController
+class Api::V1::Merchants::SearchController < ApplicationController
   respond_to :json
 
   def index
-    respond_with Merchant.where(merchant_params)
+    @merchants = Merchant.where(merchant_params)
+    respond_with @merchants
   end
 
   def show
-    respond_with Merchant.find_by(merchant_params)
+    @merchant = Merchant.find_by(merchant_params)
+    respond_with @merchant
   end
 
   private
