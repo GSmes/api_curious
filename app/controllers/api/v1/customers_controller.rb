@@ -2,10 +2,12 @@ class Api::V1::CustomersController < ApplicationController
   respond_to :json
 
   def index
-    respond_with Customer.all
+    @customers = Customer.all
+    respond_with @customers
   end
 
   def show
-    respond_with Customer.find(params[:id])
+    @customer = Customer.find(params[:id])
+    respond_with @customer
   end
 end
