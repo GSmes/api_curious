@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :invoice do |f|
-    f.customer_id { Faker::Number.between(1, 500) }
-    f.merchant_id { Faker::Number.between(1, 500) }
-    f.status { Faker::Hipster.word }
-    f.created_at { Faker::Date.between(10.years.ago, 1.year.ago) }
-    f.updated_at {Faker::Date.between(1.year.ago, Date.today) }
+    f.customer { FactoryGirl.create(:customer) }
+    f.merchant { FactoryGirl.create(:merchant) }
+    f.status { Faker::Hacker.ingverb }
+    f.created_at { Faker::Time.between(10.years.ago, 1.year.ago) }
+    f.updated_at {Faker::Time.between(1.year.ago, DateTime.now) }
   end
 end
