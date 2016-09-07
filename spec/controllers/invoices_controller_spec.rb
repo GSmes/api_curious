@@ -9,9 +9,6 @@ RSpec.describe Api::V1::InvoicesController do
       get :index, format: :json
       expect(assigns(:invoices).count).to eq(10)
     end
-    
-    xit "returns all invoices in JSON format" do
-    end
   end
   
   describe "GET show" do
@@ -21,6 +18,7 @@ RSpec.describe Api::V1::InvoicesController do
       
       get :show, params: { id: 1, format: :json }
       expect(assigns(:invoice).status).to eq("bling")
+      expect(assigns(:invoice).status).to_not eq("boring")
     end
   end
   
