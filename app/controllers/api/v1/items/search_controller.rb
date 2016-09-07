@@ -2,8 +2,8 @@ class Api::V1::Items::SearchController < ApplicationController
   respond_to :json
   
   def index
-    @item = Item.where(item_params)
-    respond_with @item
+    @items = Item.where(item_params)
+    respond_with @items
   end
   
   def show
