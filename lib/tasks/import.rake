@@ -5,7 +5,7 @@ namespace :import do
   task customers: :environment do
     file = File.join Rails.root, "db/data/customers.csv"
     CSV.foreach(file, headers: true) do |row|
-      Customer.create(row.to_hash)
+      Customer.create!(row.to_hash)
     end
   end
 
@@ -13,7 +13,7 @@ namespace :import do
   task invoice_items: :environment do
     file = File.join Rails.root, "db/data/invoice_items.csv"
     CSV.foreach(file, headers: true) do |row|
-    InvoiceItem.create(row.to_hash)
+      InvoiceItem.create!(row.to_hash)
     end
   end
 
@@ -21,15 +21,15 @@ namespace :import do
   task invoices: :environment do
     file = File.join Rails.root, "db/data/invoices.csv"
     CSV.foreach(file, headers: true) do |row|
-    Invoice.create(row.to_hash)
+      Invoice.create!(row.to_hash)
     end
   end
 
   desc "Import items from csv"
   task items: :environment do
-    file= File.join Rails.root, "db/data/items.csv"
+    file = File.join Rails.root, "db/data/items.csv"
     CSV.foreach(file, headers: true) do |row|
-      Item.create(row.to_hash)
+      Item.create!(row.to_hash)
     end
   end
 
@@ -37,15 +37,15 @@ namespace :import do
   task merchants: :environment do
     file = File.join Rails.root, "db/data/merchants.csv"
     CSV.foreach(file, headers: true) do |row|
-      Merchant.create(row.to_hash)
+      Merchant.create!(row.to_hash)
     end
   end
 
   desc "Import transactions from csv"
   task transactions: :environment do
-    file= File.join Rails.root, "db/data/transactions.csv"
+    file = File.join Rails.root, "db/data/transactions.csv"
     CSV.foreach(file, headers: true) do |row|
-      Transaction.create(row.to_hash)
+      Transaction.create!(row.to_hash)
     end
   end
 
