@@ -27,7 +27,7 @@ namespace :import do
 
   desc "Import items from csv"
   task items: :environment do
-    file= File.join Rails.root, "Db/data/items.csv"
+    file= File.join Rails.root, "db/data/items.csv"
     CSV.foreach(file, headers: true) do |row|
       Item.create(row.to_hash)
     end
@@ -43,7 +43,7 @@ namespace :import do
 
   desc "Import transactions from csv"
   task transactions: :environment do
-    file= File.join Rails.root, "Db/data/transactions.csv"
+    file= File.join Rails.root, "db/data/transactions.csv"
     CSV.foreach(file, headers: true) do |row|
       Transaction.create(row.to_hash)
     end
