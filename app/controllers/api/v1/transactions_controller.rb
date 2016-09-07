@@ -2,10 +2,12 @@ class Api::V1::TransactionsController < ApplicationController
   respond_to :json
 
   def index
-    respond_with Transaction.all
+    @transactions = Transaction.all
+    respond_with @transactions
   end
 
   def show
-    respond_with Transaction.find(params[:id])
+    @transaction = Transaction.find(params[:id])
+    respond_with @transaction
   end
 end
