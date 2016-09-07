@@ -70,3 +70,7 @@ capybara*.html
 # Locally uploaded files #
 ######################
 /public/system
+
+# Simplecov #
+#####################
+coverage

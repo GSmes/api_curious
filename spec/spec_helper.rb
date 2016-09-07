@@ -1,6 +1,5 @@
 require 'factory_girl_rails'
 require 'support/factory_girl'
-require 'faker'
 require 'capybara/rspec'
 require 'database_cleaner'
 require 'awesome_print'

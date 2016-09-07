@@ -1,10 +1,10 @@
 FactoryGirl.define do
-  factory :item do |f|
-    f.name { Faker::Hacker.adjective + " " + Faker::Hipster.word }
-    f.description { Faker::Lorem.paragraph }
-    f.unit_price { Faker::Commerce.price }
-    f.merchant { FactoryGirl.create(:merchant) }
-    f.created_at { Faker::Time.between(10.years.ago, 1.year.ago) }
-    f.updated_at { Faker::Time.between(1.year.ago, DateTime.now) }
+  factory :item do
+    sequence(:name) { |n| "Import_##{n}" }
+    sequence(:description) { |n| "Description of Item ##{n}" }
+    unit_price { rand(10000)/100 }
+    merchant { FactoryGirl.create(:merchant) }
+    created_at { 1.year.ago }
+    updated_at { DateTime.now }
   end
 end

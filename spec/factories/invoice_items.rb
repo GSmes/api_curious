@@ -1,10 +1,10 @@
 FactoryGirl.define do
-  factory :invoice_item do |f|
-    f.invoice { FactoryGirl.create(:invoice) }
-    f.item { FactoryGirl.create(:item) }
-    f.quantity { Faker::Number.number(2) }
-    f.unit_price { Faker::Commerce.price }
-    f.created_at { Faker::Time.between(10.years.ago, 1.year.ago) }
-    f.updated_at { Faker::Time.between(1.year.ago, DateTime.now) }
+  factory :invoice_item do
+    invoice { FactoryGirl.create(:invoice) }
+    item { FactoryGirl.create(:item) }
+    quantity { rand(10) }
+    unit_price { item.unit_price }
+    created_at { 1.year.ago }
+    updated_at { DateTime.now }
   end
 end
