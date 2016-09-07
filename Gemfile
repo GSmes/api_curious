@@ -29,6 +29,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'responders'
+gem 'active_model_serializers'
 
 group :development, :test do
   gem 'byebug', platform: :mri
