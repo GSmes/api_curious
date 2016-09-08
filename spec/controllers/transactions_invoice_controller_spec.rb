@@ -11,7 +11,7 @@ RSpec.describe Api::V1::Transactions::InvoicesController do
         FactoryGirl.create(:invoice)
       end
       
-      get :show, params: { format: :json, id: 1 }
+      get :show, params: { id: 1 }
       
       expect(assigns(:invoice).id).to eq(20)
     end
@@ -25,7 +25,7 @@ RSpec.describe Api::V1::Transactions::InvoicesController do
         invoice: FactoryGirl.create(:invoice)
       )
       
-      get :show, params: { format: :json, id: 1 }
+      get :show, params: { id: 1 }
       
       expect(assigns(:invoice)).to_not be_within(1).of(2)
     end

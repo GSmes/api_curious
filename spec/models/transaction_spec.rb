@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe Transaction, type: :model do
   it "has a valid factory" do
     invoice = FactoryGirl.create(:transaction)
-
     expect(invoice).to be_valid
   end
 

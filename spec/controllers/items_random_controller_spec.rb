@@ -6,10 +6,10 @@ RSpec.describe Api::V1::Items::RandomController do
       500.times do |n|
         FactoryGirl.create(:item)
       end
-      get :show, params: { format: :json }
+      get :show
       first_random_item = assigns(:item)
       
-      get :show, params: { format: :json }
+      get :show
       second_random_item = assigns(:item)
       
       expect(first_random_item).to_not eq(second_random_item)

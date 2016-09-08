@@ -6,7 +6,7 @@ RSpec.describe Api::V1::ItemsController do
       10.times do
         FactoryGirl.create(:item)
       end
-      get :index, format: :json
+      get :index
       expect(assigns(:items).count).to eq(10)
     end
   end
@@ -16,7 +16,7 @@ RSpec.describe Api::V1::ItemsController do
       FactoryGirl.create(:item, id: 1, name: "Kawai Piano")
       FactoryGirl.create(:item, id: 2, name: "Steinway Piano")
       
-      get :show, params: { id: 1, format: :json }
+      get :show, params: { id: 1 }
       expect(assigns(:item).name).to eq("Kawai Piano")
       expect(assigns(:item).name).to_not eq("Steinway Piano")
     end

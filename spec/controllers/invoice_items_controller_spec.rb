@@ -6,7 +6,7 @@ RSpec.describe Api::V1::InvoiceItemsController do
       10.times do
         FactoryGirl.create(:invoice_item)
       end
-      get :index, format: :json
+      get :index
       expect(assigns(:invoice_items).count).to eq(10)
     end
   end
@@ -16,7 +16,7 @@ RSpec.describe Api::V1::InvoiceItemsController do
       FactoryGirl.create(:invoice_item, id: 1, unit_price: 9.99)
       FactoryGirl.create(:invoice_item, id: 2, unit_price: 4.99)
       
-      get :show, params: { id: 1, format: :json }
+      get :show, params: { id: 1 }
       expect(assigns(:invoice_item).unit_price).to eq(9.99)
       expect(assigns(:invoice_item).unit_price).to_not eq(4.99)
     end
