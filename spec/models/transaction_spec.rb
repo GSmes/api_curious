@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Transaction, type: :model do
   it "has a valid factory" do
-    invoice = FactoryGirl.create(:customer)
+    transaction = FactoryGirl.create(:transaction)
 
-    expect(invoice).to be_valid
+    expect(transaction).to be_valid
   end
 
   it { should belong_to :invoice }
