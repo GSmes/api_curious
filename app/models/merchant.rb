@@ -8,9 +8,10 @@ class Merchant < ApplicationRecord
   
   def self.order_by_revenue(top_n)
     result = []
-    top_n_revenues = total_revenues.values.sort.reverse.shift(top_n)
+    all_revenues_per_merchant = total_revenues
+    top_n_revenues = all_revenues_per_merchant.values.sort.reverse.shift(top_n)
     top_n_revenues.each do |revenue|
-      result << total_revenues.key(revenue)
+      result << all_revenues_per_merchant.key(revenue)
     end
     result
   end
