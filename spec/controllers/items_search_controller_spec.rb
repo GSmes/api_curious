@@ -19,9 +19,8 @@ RSpec.describe Api::V1::Items::SearchController do
         FactoryGirl.create(:item, unit_price: 9.99)
       end
       
-      get :index, params: {
-        item: { unit_price: 5.99 }
-      }
+      get :index, params: { unit_price: 5.99 }
+      
       expect(assigns(:items).count).to eq(5)
     end
   end

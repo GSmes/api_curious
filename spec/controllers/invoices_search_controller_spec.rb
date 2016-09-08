@@ -19,9 +19,8 @@ RSpec.describe Api::V1::Invoices::SearchController do
         FactoryGirl.create(:invoice, status: "Subset")
       end
       
-      get :index, params: {
-        invoice: { status: "Subset" }
-      }
+      get :index, params: { status: "Subset" }
+      
       expect(assigns(:invoices).count).to eq(5)
     end
   end
