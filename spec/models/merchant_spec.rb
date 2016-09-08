@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Merchant, type: :model do
   it "has a valid factory" do
-    invoice = FactoryGirl.create(:merchant)
+    merchant = FactoryGirl.create(:merchant)
 
-    expect(invoice).to be_valid
+    expect(merchant).to be_valid
   end
 
   it { should have_many :items }
