@@ -8,7 +8,7 @@ RSpec.describe Api::V1::Merchants::InvoicesController do
         FactoryGirl.create(:invoice, merchant: merchant)
       end
       
-      get :index, params: { format: :json, id: 1 }
+      get :index, params: { id: 1 }
       
       expect(assigns(:invoices).count).to eq(10)
     end
@@ -19,7 +19,7 @@ RSpec.describe Api::V1::Merchants::InvoicesController do
         FactoryGirl.create(:invoice)
       end
       
-      get :index, params: { format: :json, id: 1 }
+      get :index, params: { id: 1 }
       
       expect(assigns(:invoices).count).to eq(0)
     end
