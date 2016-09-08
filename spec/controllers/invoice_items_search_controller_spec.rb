@@ -8,7 +8,6 @@ RSpec.describe Api::V1::InvoiceItems::SearchController do
       end
       
       get :index, params: {
-        format: :json,
         invoice_item: { unit_price: 9.99 }
       }
       expect(assigns(:invoice_items).count).to eq(10)
@@ -21,7 +20,6 @@ RSpec.describe Api::V1::InvoiceItems::SearchController do
       end
       
       get :index, params: {
-        format: :json,
         invoice_item: { unit_price: 100 }
       }
       expect(assigns(:invoice_items).count).to eq(5)
@@ -35,7 +33,6 @@ RSpec.describe Api::V1::InvoiceItems::SearchController do
       end
       
       get :show, params: {
-        format: :json,
         invoice_item: { unit_price: 50 }
       }
       expect(assigns(:invoice_item)).to be_a(InvoiceItem)

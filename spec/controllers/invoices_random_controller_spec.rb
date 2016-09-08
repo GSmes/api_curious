@@ -6,10 +6,10 @@ RSpec.describe Api::V1::Invoices::RandomController do
       500.times do
         FactoryGirl.create(:invoice)
       end
-      get :show, params: { format: :json }
+      get :show
       first_random_invoice = assigns(:invoice)
       
-      get :show, params: { format: :json }
+      get :show
       second_random_invoice = assigns(:invoice)
       
       expect(first_random_invoice).to_not eq(second_random_invoice)
