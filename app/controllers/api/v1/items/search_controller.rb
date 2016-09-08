@@ -1,20 +1,20 @@
 class Api::V1::Items::SearchController < ApplicationController
   respond_to :json
-  
+
   def index
     @items = Item.where(item_params)
     respond_with @items
   end
-  
+
   def show
     @item = Item.find_by(item_params)
     respond_with @item
   end
-  
-  private 
-  
+
+  private
+
   def item_params
-    params.require(:item).permit(
+    params.permit(
       :id,
       :name,
       :description,
