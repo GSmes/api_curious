@@ -37,10 +37,10 @@ RSpec.describe Api::V1::Merchants::RevenueController do
       
       get :index, params: { quantity: 3 }
       
-      result = JSON.parse(response.body, object_class: OpenStruct)
-      expect(result.first["id"]).to eq(1)
-      expect(result.second["id"]).to eq(2)
-      expect(result.last["id"]).to eq(3)
+      result = JSON.parse(response.body)
+      expect(OpenStruct.new(result[0]).id).to eq(1)
+      expect(OpenStruct.new(result[1]).id).to eq(2)
+      expect(OpenStruct.new(result[2]).id).to eq(3)
     end
   end
   
@@ -65,7 +65,7 @@ RSpec.describe Api::V1::Merchants::RevenueController do
       )
       
       get :show, id: 1
-      expect(JSON.parse(response.body)).to eq("500.0")
+      expect(JSON.parse(response.body)).to eq(500.0)
     end
   end
 end
