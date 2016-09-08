@@ -8,7 +8,6 @@ RSpec.describe Api::V1::Merchants::ItemsController do
         FactoryGirl.create(:item, merchant: merchant)
       end
       get :index, params: {
-        format: :json,
         id: 1
       }
       expect(assigns(:items).count).to eq(5)
@@ -20,7 +19,6 @@ RSpec.describe Api::V1::Merchants::ItemsController do
         FactoryGirl.create(:item)
       end
       get :index, params: {
-        format: :json,
         id: 1
       }
       expect(assigns(:items).count).to eq(0)

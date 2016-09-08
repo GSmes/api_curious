@@ -8,7 +8,6 @@ RSpec.describe Api::V1::Invoices::SearchController do
       end
         
       get :index, params: {
-        format: :json,
         invoice: { status: "Rockin' and Rollin'" }
       }
       expect(assigns(:invoices).count).to eq(10)
@@ -21,7 +20,6 @@ RSpec.describe Api::V1::Invoices::SearchController do
       end
       
       get :index, params: {
-        format: :json,
         invoice: { status: "Subset" }
       }
       expect(assigns(:invoices).count).to eq(5)
@@ -35,7 +33,6 @@ RSpec.describe Api::V1::Invoices::SearchController do
       end
       
       get :show, params: {
-        format: :json,
         invoice: { status: "Rockin' and Rollin'" }
       }
       expect(assigns(:invoice)).to be_a(Invoice)
