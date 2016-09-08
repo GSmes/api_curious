@@ -7,14 +7,18 @@ namespace :import do
     CSV.foreach(file, headers: true) do |row|
       Customer.create!(row.to_hash)
     end
+    puts "Imported Customers!"
   end
 
   desc "Import invoice items from csv"
   task invoice_items: :environment do
     file = File.join Rails.root, "db/data/invoice_items.csv"
     CSV.foreach(file, headers: true) do |row|
-      InvoiceItem.create!(row.to_hash)
+      unit_price = row["unit_price"].to_f/100.00
+      i = InvoiceItem.create!(row.to_hash)
+      i.update_attribute(:unit_price, unit_price)
     end
+    puts "Imported Invoice Items!"
   end
 
   desc "Import invoices from csv"
@@ -23,14 +27,18 @@ namespace :import do
     CSV.foreach(file, headers: true) do |row|
       Invoice.create!(row.to_hash)
     end
+    puts "Imported Invoices!"
   end
 
   desc "Import items from csv"
   task items: :environment do
     file = File.join Rails.root, "db/data/items.csv"
     CSV.foreach(file, headers: true) do |row|
-      Item.create!(row.to_hash)
+      unit_price = row["unit_price"].to_f/100.00
+      i = Item.create!(row.to_hash)
+      i.update_attribute(:unit_price, unit_price)
     end
+    puts "Imported Items!"
   end
 
   desc "Import merchants from csv"
@@ -39,6 +47,7 @@ namespace :import do
     CSV.foreach(file, headers: true) do |row|
       Merchant.create!(row.to_hash)
     end
+    puts "Imported Merchants!"
   end
 
   desc "Import transactions from csv"
@@ -47,6 +56,7 @@ namespace :import do
     CSV.foreach(file, headers: true) do |row|
       Transaction.create!(row.to_hash)
     end
+    puts "Imported Transactions!"
   end
 
   desc "Import all csv files"
