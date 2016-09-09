@@ -7,7 +7,7 @@ class Api::V1::Items::SearchController < ApplicationController
   end
 
   def show
-    @item = Item.find_by(item_params)
+    @item = Item.order(id: :asc).find_by(item_params)
     respond_with @item
   end
 
