@@ -2,42 +2,44 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::Merchants::MostItemsController do
   describe "GET most items" do
-    xit "retrieves the merchants ranked by number of items sold" do
-      # need to figure out how to write this test. Currently returning empty array
-      merchant_1 = FactoryGirl.create(:merchant, id: 1)
-      merchant_2 = FactoryGirl.create(:merchant, id: 2)
-      merchant_3 = FactoryGirl.create(:merchant, id: 3)
+    it "retrieves the merchants ranked by number of items sold" do
+      merchant_1, merchant_2, merchant_3 = FactoryGirl.create_list(:merchant, 3)
 
       invoice_1 = FactoryGirl.create(:invoice, merchant: merchant_1)
       invoice_2 = FactoryGirl.create(:invoice, merchant: merchant_2)
       invoice_3 = FactoryGirl.create(:invoice, merchant: merchant_3)
 
-      item_1 = FactoryGirl.create(:item, merchant: merchant_1)
-      item_2 = FactoryGirl.create(:item, merchant: merchant_2)
-      item_3 = FactoryGirl.create(:item, merchant: merchant_3)
+      FactoryGirl.create(:transaction, invoice: invoice_1, result: "success")
+      FactoryGirl.create(:transaction, invoice: invoice_2, result: "success")
+      FactoryGirl.create(:transaction, invoice: invoice_3, result: "success")
 
-      invoice_item_1 = FactoryGirl.create(
+      item_1 = FactoryGirl.create(:item, merchant: merchant_1)
+      item_2 = FactoryGirl.create(:item, merchant: merchant_1)
+      item_3 = FactoryGirl.create(:item, merchant: merchant_2)
+      item_4 = FactoryGirl.create(:item, merchant: merchant_3)
+
+      FactoryGirl.create(
         :invoice_item,
         invoice: invoice_1,
         item: item_1,
-        quantity: 3
+        quantity: 2
       )
-      invoice_item_2 = FactoryGirl.create(
+      FactoryGirl.create(
         :invoice_item,
         invoice: invoice_1,
-        item: item_1,
+        item: item_2,
         quantity: 4
       )
-      invoice_item_3 = FactoryGirl.create(
+      FactoryGirl.create(
         :invoice_item,
         invoice: invoice_2,
-        item: item_2,
+        item: item_3,
         quantity: 1
       )
-      invoice_item_4 = FactoryGirl.create(
+      FactoryGirl.create(
         :invoice_item,
         invoice: invoice_3,
-        item: item_3,
+        item: item_4,
         quantity: 8
       )
 
@@ -48,9 +50,9 @@ RSpec.describe Api::V1::Merchants::MostItemsController do
       parsed_response = JSON.parse(response.body)
 
       expect(parsed_response.class).to eq(Array)
-      binding.pry
       expect(parsed_response.count).to eq(2)
-      expect(parsed_response.first["id"]).to eq(merchant_1.id)
+      expect(parsed_response.first["id"]).to eq(merchant_3.id)
+      expect(parsed_response.last["id"]).to eq(merchant_1.id)
     end
   end
 end

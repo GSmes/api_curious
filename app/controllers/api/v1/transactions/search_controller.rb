@@ -1,5 +1,4 @@
 class Api::V1::Transactions::SearchController < ApplicationController
-  respond_to :json
 
   def index
     @transactions = Transaction.where(transaction_params)

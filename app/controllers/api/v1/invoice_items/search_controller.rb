@@ -1,5 +1,4 @@
 class Api::V1::InvoiceItems::SearchController < ApplicationController
-  respond_to :json
 
   def index
     @invoice_items = InvoiceItem.where(invoice_item_params)

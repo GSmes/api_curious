@@ -1,5 +1,4 @@
 class Api::V1::MerchantsController < ApplicationController
-  respond_to :json
 
   def index
     @merchants = Merchant.all

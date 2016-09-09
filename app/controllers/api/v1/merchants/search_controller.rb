@@ -1,5 +1,4 @@
 class Api::V1::Merchants::SearchController < ApplicationController
-  respond_to :json
 
   def index
     @merchants = Merchant.where(merchant_params)

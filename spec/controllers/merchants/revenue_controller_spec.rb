@@ -44,27 +44,36 @@ RSpec.describe Api::V1::Merchants::RevenueController do
   end
 
   describe "GET /:id/revenue" do
-    xit "returns the total revenue for that merchant across all transactions" do
-      m = FactoryGirl.create(:merchant, id: 1)
-      item = FactoryGirl.create(:item, merchant: m, unit_price: 100)
-      c = FactoryGirl.create(:customer, id: 1)
-      invoice_1 = FactoryGirl.create(:invoice, customer: c, merchant: m)
-      invoice_2 = FactoryGirl.create(:invoice, customer: c, merchant: m)
-      FactoryGirl.create(:invoice_item,
+    it "returns the total revenue for that merchant across all transactions" do
+      merchant = FactoryGirl.create(:merchant, id: 1)
+
+      item = FactoryGirl.create(:item, merchant: merchant, unit_price: 100.00)
+
+      invoice_1 = FactoryGirl.create(:invoice, merchant: merchant)
+      invoice_2 = FactoryGirl.create(:invoice, merchant: merchant)
+
+      FactoryGirl.create(
+        :invoice_item,
         invoice: invoice_1,
         item: item,
-        quantity: 2,
-        unit_price: 100.00
+        quantity: 3,
+        unit_price: item.unit_price
       )
-      FactoryGirl.create(:invoice_item,
+      FactoryGirl.create(
+        :invoice_item,
         invoice: invoice_2,
         item: item,
-        quantity: 3,
-        unit_price: 100.00
+        quantity: 4,
+        unit_price: item.unit_price
       )
 
+      FactoryGirl.create(:transaction, invoice: invoice_1, result: "success")
+      FactoryGirl.create(:transaction, invoice: invoice_2, result: "success")
+
       get :show, params: { id: 1 }
-      expect(JSON.parse(response.body)).to eq({"revenue" => "500.00"})
+
+      result = JSON.parse(response.body)
+      expect(result).to eq({"revenue" => "700.00"})
     end
   end
 
@@ -72,23 +81,24 @@ RSpec.describe Api::V1::Merchants::RevenueController do
     it "retrieves the total revenue across date x for all merchants" do
       m1 = FactoryGirl.create(:merchant)
       m1_item = FactoryGirl.create(:item, merchant: m1)
-      m1_inv = FactoryGirl.create(:invoice, merchant: m1)
+      m1_inv = FactoryGirl.create(:invoice, merchant: m1, created_at: "2016-09-09 02:55:05")
       m1_ii = FactoryGirl.create(:invoice_item,
         invoice: m1_inv, item: m1_item, quantity: 10, unit_price: 10)
       m1_it = FactoryGirl.create(:transaction,
-        invoice: m1_inv, updated_at: "3/3/2003", result: "success")
+        invoice: m1_inv, result: "success")
+
       m2 = FactoryGirl.create(:merchant)
       m2_item = FactoryGirl.create(:item, merchant: m2)
-      m2_inv = FactoryGirl.create(:invoice, merchant: m2)
+      m2_inv = FactoryGirl.create(:invoice, merchant: m2, created_at: "2016-09-09 02:55:05")
       m2_ii = FactoryGirl.create(:invoice_item,
         invoice: m2_inv, item: m2_item, quantity: 5, unit_price: 5)
       m2_it = FactoryGirl.create(:transaction,
-        invoice: m2_inv, updated_at: "3/3/2003", result: "success")
+        invoice: m2_inv, result: "success")
 
-      get :date, params: { date: "3/3/2003" }
+      get :date, params: { date: "2016-09-09 02:55:05" }
 
-      result = response.body
-      expect(result).to eq("125.00")
+      result = JSON.parse(response.body)
+      expect(result).to eq({"total_revenue" => "125.00"})
     end
   end
 
@@ -96,18 +106,18 @@ RSpec.describe Api::V1::Merchants::RevenueController do
     it "retrieves the total revenue across date x for that merchant" do
       m = FactoryGirl.create(:merchant, id: 1)
       item = FactoryGirl.create(:item, merchant: m)
-      invoice_1 = FactoryGirl.create(:invoice, merchant: m)
+      invoice_1 = FactoryGirl.create(:invoice, merchant: m, created_at: "2016-09-09 02:55:05")
       invoice_item_1 = FactoryGirl.create(:invoice_item,
         invoice: invoice_1, item: item, quantity: 10, unit_price: 10)
       invoice_transaction_1 = FactoryGirl.create(:transaction,
-        invoice: invoice_1, updated_at: "3/3/2003", result: "success")
-      invoice_2 = FactoryGirl.create(:invoice, merchant: m)
+        invoice: invoice_1, result: "success")
+      invoice_2 = FactoryGirl.create(:invoice, merchant: m, created_at: "2016-09-09 02:55:05")
       invoice_item_2 = FactoryGirl.create(:invoice_item,
         invoice: invoice_2, item: item, quantity: 5, unit_price: 5)
       invoice_transaction_2 = FactoryGirl.create(:transaction,
-        invoice: invoice_2, updated_at: "3/3/2003", result: "success")
+        invoice: invoice_2, result: "success")
 
-      get :show, params: { id: 1, date: "3/3/2003" }
+      get :show, params: { id: 1, date: "2016-09-09 02:55:05" }
 
       result = JSON.parse(response.body)
       expect(result).to eq({"revenue" => "125.00"})

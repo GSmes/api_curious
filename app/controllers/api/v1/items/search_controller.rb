@@ -1,5 +1,4 @@
 class Api::V1::Items::SearchController < ApplicationController
-  respond_to :json
 
   def index
     @items = Item.where(item_params)

@@ -16,44 +16,34 @@ class Merchant < ApplicationRecord
       .limit(quantity)
   end
 
-  def self.order_by_revenue(top_n)
-    result = []
-    all_revenues_per_merchant = total_revenues
-    top_n_revenues = all_revenues_per_merchant.values.sort.reverse.shift(top_n)
-    top_n_revenues.each do |revenue|
-      result << all_revenues_per_merchant.key(revenue)
-    end
-    result
-  end
-
-  def self.total_revenues
-    total_revenues = {}
-    all.each do |merchant|
-      total_revenues[merchant] = merchant.total_revenue.round(2)
-    end
-    total_revenues
+  def self.order_by_revenue(quantity)
+    joins(:invoice_items)
+      .group(:id)
+      .order("sum(invoice_items.quantity * invoice_items.unit_price) DESC")
+      .limit(quantity)
   end
 
   def total_revenue
-    total_revenue = 0
-    self.invoices.each do |invoice|
-      invoice.invoice_items.each do |invoice_item|
-        if invoice_item.invoice.transactions.pluck(:result).include?("success")
-          total_revenue += invoice_item.quantity * invoice_item.unit_price
-        end
-      end
-    end
-    total_revenue.to_f.round(2)
+    invoices.joins(:transactions, :invoice_items)
+      .where(transactions: { result: "success" })
+      .sum("invoice_items.quantity * invoice_items.unit_price")
   end
 
   def revenue_on(date)
-    @revenue = Transaction.merchant_revenue_on_date(date, self.id)
+    invoices.where(created_at: date)
+      .joins(:invoice_items)
+      .sum("invoice_items.quantity * invoice_items.unit_price")
+  end
+
+  def self.total_revenue_on(date)
+    Invoice.where(created_at: date)
+      .joins(:invoice_items)
+      .sum("invoice_items.quantity * invoice_items.unit_price")
   end
 
   def customers_with_pending_invoices
-    all_invoices = self.invoices
     customer_ids = []
-    all_invoices.each do |invoice|
+    invoices.each do |invoice|
       if invoice.pending?
         customer_ids << invoice.customer_id
       end
@@ -63,7 +53,7 @@ class Merchant < ApplicationRecord
 
   def favorite_customer
     result = {}
-    self.invoices.each do |invoice|
+    invoices.each do |invoice|
       result[invoice.customer] ||= 0
       result[invoice.customer] += 1 unless invoice.pending?
     end
