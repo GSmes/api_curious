@@ -1,11 +1,21 @@
 class Merchant < ApplicationRecord
   has_many :items
   has_many :invoices
+  has_many :invoice_items, through: :invoices
+  has_many :transactions, through: :invoices
 
   validates :name, presence: true
   validates :created_at, presence: true
   validates :updated_at, presence: true
-  
+
+  def self.most_items(quantity)
+    joins(invoices: [:transactions, :invoice_items])
+      .where(transactions: { result: "success" })
+      .group(:id)
+      .order("sum(invoice_items.quantity) DESC")
+      .limit(quantity)
+  end
+
   def self.order_by_revenue(top_n)
     result = []
     all_revenues_per_merchant = total_revenues
@@ -15,7 +25,7 @@ class Merchant < ApplicationRecord
     end
     result
   end
-  
+
   def self.total_revenues
     total_revenues = {}
     all.each do |merchant|
@@ -23,7 +33,7 @@ class Merchant < ApplicationRecord
     end
     total_revenues
   end
-  
+
   def total_revenue
     total_revenue = 0
     self.invoices.each do |invoice|
@@ -33,11 +43,11 @@ class Merchant < ApplicationRecord
     end
     total_revenue.to_f.round(2)
   end
-  
+
   def revenue_on(date)
     @revenue = Transaction.merchant_revenue_on_date(date, self.id)
   end
-  
+
   def customers_with_pending_invoices
     all_invoices = self.invoices
     customer_ids = []
@@ -48,7 +58,7 @@ class Merchant < ApplicationRecord
     end
     customer_ids
   end
-  
+
   def favorite_customer
     result = {}
     self.invoices.each do |invoice|
