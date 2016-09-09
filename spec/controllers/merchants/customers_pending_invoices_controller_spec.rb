@@ -7,7 +7,7 @@ RSpec.describe Api::V1::Merchants::CustomersPendingInvoicesController do
       cust_1 = FactoryGirl.create(:customer, id: 1)
       inv_1 = FactoryGirl.create(:invoice, 
         customer: cust_1,
-        merchant: m,
+        merchant: m
       )
       inv_trans_1 = FactoryGirl.create(:transaction,
         invoice: inv_1,
@@ -16,7 +16,7 @@ RSpec.describe Api::V1::Merchants::CustomersPendingInvoicesController do
       cust_2 = FactoryGirl.create(:customer, id: 2)
       inv_2 = FactoryGirl.create(:invoice, 
         customer: cust_2,
-        merchant: m,
+        merchant: m
       )
       inv_trans_2 = FactoryGirl.create(:transaction,
         invoice: inv_2,
@@ -25,7 +25,7 @@ RSpec.describe Api::V1::Merchants::CustomersPendingInvoicesController do
       cust_3 = FactoryGirl.create(:customer, id: 3)
       inv_3 = FactoryGirl.create(:invoice, 
         customer: cust_3,
-        merchant: m,
+        merchant: m
       )
       inv_trans_3 = FactoryGirl.create(:transaction,
         invoice: inv_3,
@@ -46,7 +46,7 @@ RSpec.describe Api::V1::Merchants::CustomersPendingInvoicesController do
       cust_1 = FactoryGirl.create(:customer, id: 1)
       inv_1 = FactoryGirl.create(:invoice,
         merchant: m,
-        customer: cust_1,
+        customer: cust_1
       )
       inv_trans_1 = FactoryGirl.create(:transaction,
         invoice: inv_1,

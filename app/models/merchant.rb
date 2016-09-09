@@ -48,4 +48,13 @@ class Merchant < ApplicationRecord
     end
     customer_ids
   end
+  
+  def favorite_customer
+    result = {}
+    self.invoices.each do |invoice|
+      result[invoice.customer] ||= 0
+      result[invoice.customer] += 1 unless invoice.pending?
+    end
+    result.key(result.values.max)
+  end
 end
