@@ -30,4 +30,32 @@ RSpec.describe Item, type: :model do
 
     expect(item.best_day).to eq("2013-01-23T12:53:59.000Z")
   end
+
+  it "returns the most sold item" do
+    item_1, item_2, item_3 = FactoryGirl.create_list(:item, 3)
+
+    invoice_item_1 = FactoryGirl.create(
+      :invoice_item,
+      item: item_1,
+      quantity: 4
+    )
+    invoice_item_2 = FactoryGirl.create(
+      :invoice_item,
+      item: item_2,
+      quantity: 3
+    )
+    invoice_item_3 = FactoryGirl.create(
+      :invoice_item,
+      item: item_3,
+      quantity: 9
+    )
+    invoice_item_4 = FactoryGirl.create(
+      :invoice_item,
+      item: item_1,
+      quantity: 2
+    )
+
+    expect(Item.most_items(2)).to eq([item_3, item_1])
+    expect(Item.most_items(3)).to eq([item_3, item_1, item_2])
+  end
 end

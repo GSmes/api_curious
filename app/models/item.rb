@@ -10,6 +10,13 @@ class Item < ApplicationRecord
   validates :created_at, presence: true
   validates :updated_at, presence: true
 
+  def self.most_items(quantity)
+    joins(:invoice_items)
+      .group("items.id")
+      .order("sum(invoice_items.quantity) DESC")
+      .limit(quantity)
+  end
+
   def best_day
     invoice_items.joins(:invoice)
       .group("invoices.created_at")
