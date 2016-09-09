@@ -39,11 +39,13 @@ class Merchant < ApplicationRecord
   end
   
   def customers_with_pending_invoices
-    pending_invoices = self.invoices.where(status: "pending")
-    customers = []
-    pending_invoices.each do |invoice|
-      customers << invoice.customer
+    all_invoices = self.invoices
+    customer_ids = []
+    all_invoices.each do |invoice|
+      if invoice.pending?
+        customer_ids << invoice.customer_id
+      end
     end
-    customers
+    customer_ids
   end
 end
