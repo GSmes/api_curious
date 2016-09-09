@@ -37,4 +37,24 @@ class Merchant < ApplicationRecord
   def revenue_on(date)
     @revenue = Transaction.merchant_revenue_on_date(date, self.id)
   end
+  
+  def customers_with_pending_invoices
+    all_invoices = self.invoices
+    customer_ids = []
+    all_invoices.each do |invoice|
+      if invoice.pending?
+        customer_ids << invoice.customer_id
+      end
+    end
+    customer_ids
+  end
+  
+  def favorite_customer
+    result = {}
+    self.invoices.each do |invoice|
+      result[invoice.customer] ||= 0
+      result[invoice.customer] += 1 unless invoice.pending?
+    end
+    result.key(result.values.max)
+  end
 end

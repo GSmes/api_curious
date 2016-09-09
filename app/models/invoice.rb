@@ -10,4 +10,13 @@ class Invoice < ApplicationRecord
   validates :status, presence: true
   validates :created_at, presence: true
   validates :updated_at, presence: true
+  
+  def pending?
+    results = self.transactions.pluck(:result)
+    if results.include?("failed")
+      return true
+    else
+      return false
+    end
+  end
 end

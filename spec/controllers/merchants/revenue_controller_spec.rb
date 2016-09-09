@@ -5,7 +5,7 @@ RSpec.describe Api::V1::Merchants::RevenueController do
     it "retrieves the top x merchants by total revenue" do
       merchant_1 = FactoryGirl.create(:merchant, id: 1)
       merchant_1_items = []
-      20.times do 
+      25.times do 
         merchant_1_items << FactoryGirl.create(:item, merchant: merchant_1)
       end
       customer = FactoryGirl.create(:customer, id: 1)
