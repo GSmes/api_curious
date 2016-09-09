@@ -37,4 +37,13 @@ class Merchant < ApplicationRecord
   def revenue_on(date)
     @revenue = Transaction.merchant_revenue_on_date(date, self.id)
   end
+  
+  def customers_with_pending_invoices
+    pending_invoices = self.invoices.where(status: "pending")
+    customers = []
+    pending_invoices.each do |invoice|
+      customers << invoice.customer
+    end
+    customers
+  end
 end
