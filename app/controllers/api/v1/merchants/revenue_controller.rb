@@ -1,4 +1,5 @@
 class Api::V1::Merchants::RevenueController < ApplicationController
+  include ActionView::Helpers::NumberHelper  
   respond_to :json
   
   def index
@@ -8,7 +9,16 @@ class Api::V1::Merchants::RevenueController < ApplicationController
   
   def show
     merchant = Merchant.find(params[:id])
-    @revenue = merchant.total_revenue
-    respond_with @revenue
+    if params[:date]
+      @revenue = merchant.revenue_on(params[:date].to_date)
+    else
+      @revenue = merchant.total_revenue
+    end
+    respond_with number_with_precision(@revenue, precision: 2)
+  end
+  
+  def date
+    @revenue = Transaction.revenue_on_date(params[:date].to_date)
+    respond_with number_with_precision(@revenue, precision: 2)
   end
 end
