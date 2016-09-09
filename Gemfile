@@ -29,6 +29,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'responders'
+gem 'active_model_serializers'
 
 group :development, :test do
   gem 'byebug', platform: :mri
@@ -38,6 +39,7 @@ group :development, :test do
   gem 'capybara'
   gem 'launchy'
   gem 'shoulda-matchers'
+  gem 'awesome_print'
 end
 
 group :development do
@@ -46,5 +48,11 @@ group :development do
   gem 'listen', '~> 3.0.5'
 end
 
+group :test do
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
+  gem 'rails-controller-testing'
+  gem 'simplecov'
+end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
