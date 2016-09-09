@@ -15,7 +15,7 @@ RSpec.describe Customer, type: :model do
   it { should validate_presence_of :created_at }
   it { should validate_presence_of :updated_at }
 
-  it "returns the customer's favorite merchant" do
+  xit "returns the customer's favorite merchant" do
     customer = FactoryGirl.create(:customer)
 
     merchant_1, merchant_2 = create_list(:merchant, 2)
