@@ -38,7 +38,9 @@ class Merchant < ApplicationRecord
     total_revenue = 0
     self.invoices.each do |invoice|
       invoice.invoice_items.each do |invoice_item|
-        total_revenue += invoice_item.quantity * invoice_item.unit_price
+        if invoice_item.invoice.transactions.pluck(:result).include?("success")
+          total_revenue += invoice_item.quantity * invoice_item.unit_price
+        end
       end
     end
     total_revenue.to_f.round(2)
