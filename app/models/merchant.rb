@@ -35,5 +35,6 @@ class Merchant < ApplicationRecord
   end
   
   def revenue_on(date)
+    @revenue = Transaction.merchant_revenue_on_date(date, self.id)
   end
 end

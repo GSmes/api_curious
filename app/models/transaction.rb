@@ -8,13 +8,25 @@ class Transaction < ApplicationRecord
   
   def self.revenue_on_date(date)
     successful_transactions = on_date(date)
-    @total_revenue = 0
+    total_revenue = 0
     successful_transactions.each do |transaction|
       transaction.invoice.invoice_items.each do |ii|
-        @total_revenue += ii.calculate_revenue
+        total_revenue += ii.calculate_revenue
       end
     end
-    @total_revenue
+    total_revenue
+  end
+  
+  def self.merchant_revenue_on_date(date, merchant_id)
+    invoices = Invoice.where(merchant_id: merchant_id).pluck(:id)
+    transactions = self.on_date(date).where(invoice: invoices)
+    total_revenue = 0
+    transactions.each do |transaction|
+      transaction.invoice.invoice_items.each do |ii|
+        total_revenue += ii.calculate_revenue
+      end
+    end
+    total_revenue
   end
   
   def self.on_date(date)

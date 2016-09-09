@@ -92,5 +92,27 @@ RSpec.describe Api::V1::Merchants::RevenueController do
       expect(result).to eq("125.00")
     end
   end
+  
+  describe "GET :id/revenue?date=x" do
+    it "retrieves the total revenue across date x for that merchant" do
+      m = FactoryGirl.create(:merchant, id: 1)
+      item = FactoryGirl.create(:item, merchant: m)
+      invoice_1 = FactoryGirl.create(:invoice, merchant: m)
+      invoice_item_1 = FactoryGirl.create(:invoice_item, 
+        invoice: invoice_1, item: item, quantity: 10, unit_price: 10)
+      invoice_transaction_1 = FactoryGirl.create(:transaction, 
+        invoice: invoice_1, updated_at: "3/3/2003", result: "success")
+      invoice_2 = FactoryGirl.create(:invoice, merchant: m)
+      invoice_item_2 = FactoryGirl.create(:invoice_item, 
+        invoice: invoice_2, item: item, quantity: 5, unit_price: 5)
+      invoice_transaction_2 = FactoryGirl.create(:transaction, 
+        invoice: invoice_2, updated_at: "3/3/2003", result: "success")
+
+      get :show, params: { id: 1, date: "3/3/2003" }
+      
+      result = response.body
+      expect(result).to eq("125.00")
+    end
+  end
 end
       
