@@ -59,10 +59,6 @@ RSpec.describe Api::V1::Merchants::CustomersPendingInvoicesController do
       )
       inv_trans_2 = FactoryGirl.create(:transaction,
         invoice: inv_2,
-        result: "failed"
-      )
-      inv_trans_3 = FactoryGirl.create(:transaction,
-        invoice: inv_2,
         result: "success"
       )
       

@@ -14,7 +14,7 @@ class Invoice < ApplicationRecord
   def pending?
     results = self.transactions.pluck(:result)
     if results.include?("failed")
-      return results.exclude?("success")
+      return true
     else
       return false
     end
