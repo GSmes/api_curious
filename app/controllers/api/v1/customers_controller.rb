@@ -1,5 +1,4 @@
 class Api::V1::CustomersController < ApplicationController
-  respond_to :json
 
   def index
     @customers = Customer.all

@@ -1,5 +1,4 @@
 class Api::V1::Customers::SearchController < ApplicationController
-  respond_to :json
 
   def index
     @customers = Customer.where(customer_params)

@@ -1,6 +1,8 @@
 require "application_responder"
 
 class ApplicationController < ActionController::Base
+  respond_to :json
+  
   before_action :set_default_response_format
 
   self.responder = ApplicationResponder

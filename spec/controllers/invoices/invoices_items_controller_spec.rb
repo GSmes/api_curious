@@ -2,29 +2,22 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::Invoices::ItemsController do
   describe "GET associated items" do
-    xit "retrieves the correct items for that invoice" do
-      # need to figure out how to write this test
-      invoice = FactoryGirl.create(:invoice, id: 4)
+    it "retrieves the correct items for that invoice" do
+      invoice = FactoryGirl.create(:invoice)
 
-      10.times do
-        FactoryGirl.create(:item, invoice: invoice)
-      end
+      FactoryGirl.create_list(:invoice_item, 5, invoice: invoice)
 
-      get :index, params: { id: 4 }
+      get :index, params: { id: invoice.id }
 
       expect(response.status).to eq(200)
-      expect(assigns(:items).count).to eq(10)
+      expect(assigns(:items).count).to eq(5)
     end
 
-    xit "does not retrieve items unrelated to that invoice" do
-      # need to figure out how to write this test
-      2.times do |n|
-        FactoryGirl.create(:invoice, id: "#{n+1}")
-      end
+    it "does not retrieve items unrelated to that invoice" do
+      invoice_1 = FactoryGirl.create(:invoice, id: 1)
+      invoice_2 = FactoryGirl.create(:invoice, id: 2)
 
-      3.times do |n|
-        FactoryGirl.create(:item, invoice: Invoice.find(2))
-      end
+      FactoryGirl.create_list(:invoice_item, 4, invoice: invoice_2)
 
       get :index, params: { id: 1 }
 
