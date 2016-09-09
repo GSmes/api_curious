@@ -14,7 +14,9 @@ class Api::V1::Merchants::RevenueController < ApplicationController
     else
       @revenue = merchant.total_revenue
     end
-    respond_with number_with_precision(@revenue, precision: 2)
+    response = {}
+    response["revenue"] = number_with_precision(@revenue, precision: 2).to_s
+    respond_with response
   end
   
   def date
