@@ -5,7 +5,7 @@ RSpec.describe Api::V1::Merchants::FavoriteCustomersController do
     it "retrieves the customer with the most total number of successful transactions" do
       m = FactoryGirl.create(:merchant, id: 1)
       cust_1 = FactoryGirl.create(:customer, id: 1)
-      inv_1 = FactoryGirl.create(:invoice, 
+      inv_1 = FactoryGirl.create(:invoice,
         customer: cust_1,
         merchant: m,
       )
@@ -14,7 +14,7 @@ RSpec.describe Api::V1::Merchants::FavoriteCustomersController do
         result: "success"
       )
       cust_2 = FactoryGirl.create(:customer, id: 2)
-      inv_2 = FactoryGirl.create(:invoice, 
+      inv_2 = FactoryGirl.create(:invoice,
         customer: cust_2,
         merchant: m
       )
@@ -30,9 +30,9 @@ RSpec.describe Api::V1::Merchants::FavoriteCustomersController do
         invoice: inv_3,
         result: "success"
       )
-      
-      get :show, id: 1
-      
+
+      get :show, params: { id: 1 }
+
       result = JSON.parse(response.body)
       expect(OpenStruct.new(result).id).to eq(2)
     end

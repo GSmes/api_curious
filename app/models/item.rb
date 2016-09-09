@@ -12,7 +12,7 @@ class Item < ApplicationRecord
 
   def self.most_items(quantity)
     joins(:invoice_items)
-      .group("items.id")
+      .group(:id)
       .order("sum(invoice_items.quantity) DESC")
       .limit(quantity)
   end
